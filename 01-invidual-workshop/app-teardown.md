@@ -1,90 +1,177 @@
 # Workshop — Mổ App AI Thật
 
-**Thời gian:** 35-45 phút  
-**Hình thức:** cá nhân trước, chia sẻ theo nhóm sau  
-**Output:** finding note + sketch `as-is / to-be`
+- Họ và tên: Võ Tấn Trung.
+- MSSV: 2A202600642.
 
-Mục tiêu không phải chấm "UI đẹp hay xấu". Mục tiêu là dùng sản phẩm thật như một bài needfinding: tìm chỗ product gãy trong workflow thật, rồi viết finding đó thành quyết định product.
+## Case Study:  — Moni
 
-## 1. Chọn một sản phẩm để dùng thử
+## 1. Product được chọn
 
-| Sản phẩm | AI feature | Cách truy cập |
-|---|---|---|
-| MoMo — Moni | Trợ thủ tài chính, phân tích chi tiêu, chatbot | App MoMo |
-| Vietnam Airlines — NEO | Chatbot hỗ trợ vé, hành lý, khiếu nại | Website/Zalo VNA |
-| V-App — V-AI | Trợ lý voice/text, gợi ý theo ngữ cảnh | App V-App |
+* Product: MoMo — Moni
+* AI Feature: chatbot/trợ lý tài chính
+* Task thử nghiệm: hỏi khả năng của AI assistant
 
-## 2. Dùng thử: promise vs reality
+---
 
-Ghi nhanh:
+# 2. Promise vs Reality
 
-- Product hứa gì?
-- User nào được hứa sẽ được giúp?
-- Bạn kỳ vọng AI làm được task nào?
-- Khi dùng thật, điểm gãy xuất hiện ở đâu?
+## User Input
 
-Evidence cần có:
-
-- screenshot,
-- quote từ app/web/review,
-- prompt/input đã thử,
-- hành vi quan sát được.
-
-## 3. Vẽ 4 paths
-
-| Path | Câu hỏi cần trả lời |
-|---|---|
-| Happy | Khi AI đúng và tự tin, user thấy gì? |
-| Low-confidence | Khi AI không chắc, hệ thống có hỏi lại, show options hoặc chuyển người không? |
-| Failure | Khi AI sai, user biết bằng cách nào và sửa thế nào? |
-| Correction | Khi user sửa, correction có được lưu/log/học lại không hay biến mất? |
-
-## 4. Viết finding thành quyết định
-
-Không viết:
-
-```text
-Bot ngu, trả lời sai.
+```text id="h6m5s0"
+"bạn có khả năng gì"
 ```
 
-Viết:
+## Observed Behavior
 
-```text
-Khi user [trigger],
-AI/product [failure],
-hậu quả là [impact].
-Lỗi thuộc layer [promise / intent / data-tool / safety / UX recovery].
-Nên sửa bằng [requirement / UX / fallback / human role / test case].
+Moni không trả lời được mà bắt đầu trả lời theo form mặc định:
+
+```text id="9mz9a7"
+"Tôi là chatbot chỉ có khả năng trả lời trong phạm vi ..."
 ```
 
-Ví dụ:
+Muốn bot trả lời được thì phải ghi đúng Moni có khả năng gì.
 
-```text
-Khi user hỏi "chi tiêu linh tinh là gì?",
-AI hiểu như keyword thay vì nhận ra intent mơ hồ,
-hậu quả là user không biết sửa phân loại chi tiêu ở đâu.
-Lỗi thuộc Intent + UX Recovery.
-Nên sửa bằng low-confidence path: hỏi lại tiêu chí hoặc đưa 2-3 nhóm giao dịch để chọn.
+## User Expectation
+
+Vì Moni được giới thiệu như AI assistant nên user kỳ vọng:
+
+* có thể hỏi tự nhiên,
+* bot hiểu mình đang hỏi về capability của chính nó.
+
+## Actual Experience
+
+* Bot không hiểu câu trên đang nói với Moni.
+* User phải tự đổi cách hỏi để đúng keyword/capability mà bot hỗ trợ.
+* Cảm giác giống chatbot FAQ cứng hơn là AI assistant.
+
+## Emotional Reaction
+
+```text id="zx3u1r"
+"Cảm giác đang code với một con bot khô khan, mất hứng."
 ```
 
-## 5. Sketch as-is / to-be
+Sau đó user mất hứng và bỏ luôn.
 
-Vẽ 2 cột:
+---
 
-- **As-is:** flow hiện tại, đánh dấu điểm gãy.
-- **To-be:** flow đề xuất, đánh dấu path đã sửa.
+# 3. Four Paths
 
-Không cần đẹp. Cần nhìn vào là hiểu:
+| Path           | Observation                                                                  |
+| -------------- | ---------------------------------------------------------------------------- |
+| Happy          | Nếu user ghi đúng capability Moni hỗ trợ thì bot trả lời được.               |
+| Low-confidence | Không có hỏi lại hoặc gợi ý user nên hỏi gì.                                 |
+| Failure        | User hỏi tự nhiên: "bạn có khả năng gì" → bot fallback sang form mặc định.   |
+| Correction     | User phải tự học cách phrasing đúng với bot. Không có recovery flow rõ ràng. |
 
-- user làm gì,
-- AI làm gì,
-- lúc AI không chắc thì sao,
-- lúc AI sai user recover thế nào.
+---
 
-## 6. Tự kiểm trước khi nộp
+# 4. Finding → Product Decision
 
-- [ ] Có ít nhất 1 screenshot hoặc observation cụ thể.
-- [ ] Có đủ 4 paths hoặc nói rõ path nào chưa có trong product.
-- [ ] Finding được viết thành product decision, không chỉ là nhận xét.
-- [ ] Sketch có as-is và to-be.
-- [ ] Có một câu nói rõ finding này sẽ đổi gì trong SPEC.
+## Finding
+
+Khi user hỏi:
+
+```text id="w3a5ic"
+"bạn có khả năng gì"
+```
+
+AI không hiểu đây là câu hỏi capability discovery, mà fallback sang form mặc định giới hạn phạm vi.
+
+Hậu quả là:
+
+* user cảm giác AI bị giả,
+* conversation bị khô,
+* mất hứng tiếp tục dùng.
+
+Lỗi thuộc layer:
+
+* Intent Understanding
+* Persona / Promise mismatch
+* UX Recovery
+
+## Product Decision
+
+Nên thêm low-confidence path cho các câu capability discovery như:
+
+* "bạn có khả năng gì"
+* "bạn giúp được gì"
+* "mình nên hỏi gì"
+
+Thay vì fallback cứng, bot nên:
+
+* trả lời tự nhiên hơn,
+* gợi ý 3–5 việc Moni làm được,
+* hoặc show quick actions để user tiếp tục conversation.
+
+---
+
+# 5. Sketch — As-is / To-be
+
+## AS-IS
+
+```text id="6n3n4m"
+User:
+"bạn có khả năng gì"
+
+        ↓
+
+Moni:
+"Tôi là chatbot chỉ có khả năng..."
+
+        ↓
+
+User:
+mất hứng / confused
+
+        ↓
+
+Thoát conversation
+```
+
+### Điểm gãy
+
+* Không hiểu intent discovery
+* Response quá cứng
+* Không có recovery path
+
+---
+
+## TO-BE
+
+```text id="z8s4tl"
+User:
+"bạn có khả năng gì"
+
+        ↓
+
+AI detect:
+user đang hỏi capability
+
+        ↓
+
+Moni:
+"Mình có thể giúp:
+- xem chi tiêu,
+- tìm giao dịch,
+- nhắc thanh toán,
+- gợi ý tiết kiệm"
+
+[Quick actions]
+- "Chi tiêu tháng này"
+- "Tôi tiêu nhiều nhất vào gì?"
+- "Gợi ý tiết kiệm"
+
+        ↓
+
+Conversation tiếp tục
+```
+
+---
+
+# 6. SPEC Impact
+
+* [x] Có ít nhất 1 screenshot hoặc observation cụ thể.
+* [x] Có đủ 4 paths hoặc nói rõ path nào chưa có trong product.
+* [x] Finding được viết thành product decision, không chỉ là nhận xét.
+* [x] Sketch có as-is và to-be.
+* [x] Finding này sẽ thay đổi fallback response, low-confidence handling và onboarding flow trong SPEC của Moni.
