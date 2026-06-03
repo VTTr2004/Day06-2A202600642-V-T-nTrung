@@ -1,81 +1,157 @@
-# Day 05 Lab — Khởi Động Dự Án AI Product
+# Day 06 — AI Trip Planner SPEC
 
-> Tìm vấn đề thật → gom bằng chứng → chốt một lát cắt nhỏ → viết thin SPEC → sẵn sàng build prototype trong Day 06.
+Repo này là phần nộp cá nhân cho bài Day 06, tập trung vào việc chuẩn bị SPEC và evidence để build prototype AI Product trong track **B · Travel & Hospitality**.
 
-Day 05 không phải một buổi học đầy đủ về AI Product Management. Đây là ngày **khởi động mini-hackathon Day 06**. Cuối ngày, nhóm chưa cần có prototype hoàn chỉnh, nhưng phải đủ rõ để sáng mai build ngay.
-
-## Tài liệu trong folder này
-
-Folder này được chia theo đúng việc cần làm:
-
-| Folder / File | Dùng để làm gì |
-|---|---|
-| `01-invidual-workshop/app-teardown.md` | Bài mổ app AI thật: dùng thử, vẽ flow, tìm path yếu, viết finding thành quyết định product. |
-| `02-group-spec/` | Bộ template cho phần nhóm: gom bằng chứng, chuyển evidence thành insight/opportunity/build slice, và viết thin SPEC cuối Day 05. |
-
-## Cấu trúc repo nộp bài Day 06
-
-Mỗi học viên nộp **một repo cá nhân**:
-
-```text
-Day06-MãHọcViên-HọVàTên
-├── 01-invidual-workshop/
-└── 02-group-spec/
-```
-
-Trong đó:
-
-- `01-invidual-workshop/`: phần reflection cá nhân, nêu rõ vai trò, việc đã làm, phần AI hỗ trợ, và bài học sau demo.
-- `02-group-spec/`: bản làm chung của nhóm. Mỗi học viên copy bản cuối vào repo cá nhân của mình.
-
-## Đọc file nào để làm gì?
-
-1. Làm `01-invidual-workshop/app-teardown.md` khi lớp mổ Moni / NEO / V-AI hoặc app theo track.
-2. Dùng các template trong `02-group-spec/` để gom evidence, chốt insight/opportunity/build slice, và viết thin SPEC trước khi rời lớp.
-
-## Cuối Day 05 cần có gì?
-
-| Artifact | Cần thể hiện rõ |
-|---|---|
-| Evidence pack | User/pain có bằng chứng, không tự bịa. Có self-use và ít nhất một nguồn ngoài nhóm hoặc kế hoạch lấy nguồn rõ. |
-| Opportunity statement | Bằng chứng nói gì sâu hơn về user; vì sao đây là việc đáng sửa. |
-| Build slice | Một user, một task, một AI decision, một output. Không build cả app. |
-| Auto/Aug decision | AI gợi ý hay tự làm? Human giữ quyền ở đâu? |
-| Four paths | Happy, low-confidence, failure, correction. |
-| Failure mode | Một lỗi nguy hiểm nhất và cách prototype xử lý. |
-| Owner plan | Ai phụ trách research, SPEC, prototype, test, demo, repo. |
-
-## Flow cuối Day 05
-
-```text
-16:00  Chọn track/app
-16:15  Self-use + tìm evidence nhanh
-16:45  Gom evidence -> insight
-17:00  Chốt build slice + owner plan
-Tối    Hoàn thiện evidence pack + thin SPEC draft
-```
-
-## Điều quan trọng nhất
-
-- Track chỉ là **miền app thật**, không phải scope.
-- Nhóm không được nộp ý tưởng kiểu "AI assistant cho healthcare" hoặc "chatbot cho travel".
-- Một build slice tốt có dạng:
-
-```text
-Cho [user cụ thể] đang [task/workflow],
-prototype dùng AI để [augment/automate hành động hẹp],
-tạo ra [output],
-và xử lý [failure mode] bằng [mitigation].
-```
-
-Ví dụ:
-
-```text
-Cho bệnh nhân lần đầu không biết chọn chuyên khoa,
-prototype dùng AI để hỏi 3 câu và gợi ý 2-3 chuyên khoa phù hợp,
-đồng thời chuyển sang hướng dẫn khẩn cấp/người thật nếu có red flag.
-```
+Ý tưởng nhóm đang chốt là **AI Trip Planner cho Vinpearl / VinWonders**: AI hỗ trợ khách đang lập kế hoạch chuyến đi bằng cách hỏi thông tin đầu vào, gợi ý 2-3 lịch trình phù hợp và ước tính chi phí trước khi user quyết định đặt thật.
 
 ---
 
-*Day 05 Lab — Batch 02 · AI Product Kickoff Sprint*
+## Tổng quan dự án
+
+| Mục | Nội dung |
+|---|---|
+| Nhóm | 4AE |
+| Track | B · Travel & Hospitality |
+| Product/app chính | Vinpearl Resort & Golf / VinWonders |
+| Analog tham khảo | Sun World, Airbnb, Klook, GetYourGuide, Google Travel |
+| User chính | Khách lần đầu đến Vinpearl / VinWonders, thường đi nhóm 2-5 người hoặc gia đình có trẻ em |
+| Workflow tập trung | Lập kế hoạch trước khi đặt |
+| Pain chính | Không biết lịch trình nào phù hợp và tổng chi phí thực tế là bao nhiêu |
+| Hướng AI | Augmentation: AI gợi ý, user xem/chỉnh/quyết định cuối |
+
+---
+
+## Cấu trúc repo
+
+```text
+Day06-2A202600642-V-T-nTrung/
+├── 01-invidual-workshop/
+│   └── app-teardown.md
+├── 02-group-spec/
+│   ├── evidence-pack-template.md
+│   ├── synthesis-decide-toolkit.md
+│   └── thin-spec-template.md
+└── README.md
+```
+
+| Folder / File | Vai trò |
+|---|---|
+| `01-invidual-workshop/app-teardown.md` | Bài làm cá nhân: mổ một app/workflow AI thật, tìm điểm yếu và rút ra quyết định product |
+| `02-group-spec/evidence-pack-template.md` | Gom evidence từ self-use, review/social source và competitor analog |
+| `02-group-spec/synthesis-decide-toolkit.md` | Tổng hợp evidence thành insight, opportunity và quyết định build slice |
+| `02-group-spec/thin-spec-template.md` | Thin SPEC cho prototype AI Trip Planner, gồm user, pain, build slice, paths, failure mode và owner plan |
+
+---
+
+## Nội dung chính trong `02-group-spec`
+
+Thứ tự đọc khuyến nghị:
+
+1. `evidence-pack-template.md`
+2. `synthesis-decide-toolkit.md`
+3. `thin-spec-template.md`
+
+Ba file này đi theo cùng một mạch:
+
+- Bắt đầu từ evidence: web/app thiếu bộ lọc cá nhân hóa theo số người, ngày đi, ngân sách và ưu tiên.
+- Chuyển thành insight: user không chỉ thiếu danh sách hoạt động, mà thiếu cơ sở để ra quyết định an toàn về lịch trình và chi phí.
+- Chốt opportunity: dùng AI để augment bước lập kế hoạch trước khi đặt.
+- Thu hẹp build slice: chỉ demo flow input → AI gợi ý → lịch trình + cost estimate, không làm booking thật.
+
+---
+
+## SPEC đang chốt
+
+Prototype tập trung vào một flow hẹp:
+
+```text
+User nhập thông tin chuyến đi
+→ AI tổng hợp nhu cầu
+→ AI trả 2-3 lịch trình theo ngày
+→ AI hiển thị ước tính chi phí breakdown
+→ User xem, chỉnh hoặc hỏi thêm
+```
+
+Input chính:
+
+- Số người lớn / trẻ em
+- Số ngày đi
+- Điểm đến: Phú Quốc / Nha Trang / Đà Nẵng
+- Ngân sách tổng dự kiến
+- Ưu tiên hoạt động: thiên nhiên, vui chơi, nghỉ dưỡng, ẩm thực
+
+Output cần có:
+
+- 2-3 lịch trình dạng ngày-theo-ngày
+- Ước tính chi phí tổng
+- Breakdown chi phí: vé vào, phòng ước tính, ăn uống
+- Cảnh báo nếu ngân sách không khả thi
+
+---
+
+## Pain statement
+
+Khách lần đầu đến Vinpearl / VinWonders, đặc biệt là gia đình hoặc nhóm 2-5 người, gặp khó ở bước lập kế hoạch trước khi đặt vì không có công cụ tổng hợp lịch trình và ước tính chi phí theo điều kiện cụ thể của họ.
+
+Hệ quả:
+
+- Mất thời gian đọc nhiều trang hoặc gói dịch vụ riêng lẻ.
+- Không biết gói/lịch trình nào phù hợp với nhóm của mình.
+- Không rõ tổng chi phí thực tế trước khi cam kết.
+- Dễ gặp chi phí phát sinh hoặc kỳ vọng sai sau khi đặt.
+
+---
+
+## Auto/Aug decision
+
+Nhóm chọn **Augmentation**.
+
+AI chỉ đóng vai trò gợi ý lịch trình và ước tính chi phí. User vẫn là người xem, chỉnh, chọn và quyết định cuối cùng. Đây là lựa chọn phù hợp vì quyết định du lịch/nghỉ dưỡng liên quan đến tiền, thời gian và kỳ vọng của cả nhóm hoặc gia đình.
+
+Booking thật nằm ngoài scope Day 06.
+
+---
+
+## Four paths cần test
+
+| Path | Prototype cần thể hiện |
+|---|---|
+| Happy | User nhập đủ input hợp lệ, AI trả 2-3 lịch trình rõ ràng kèm cost estimate |
+| Low-confidence | Input mơ hồ hoặc thiếu dữ liệu, AI hỏi lại 1-2 câu thay vì tự đoán |
+| Failure | Ngân sách quá thấp, AI cảnh báo và không tạo lịch trình giả |
+| Correction | User muốn chỉnh lịch trình, AI cập nhật theo yêu cầu mà không bắt nhập lại từ đầu |
+
+Failure mode nguy hiểm nhất: AI trả lịch trình trông hợp lý nhưng không khả thi về chi phí. Prototype cần có cost floor hoặc ngưỡng tối thiểu để cảnh báo khi ngân sách thấp hơn thực tế dự kiến.
+
+---
+
+## Phân công hiện tại
+
+| Thành viên | Phụ trách | Artifact cần có |
+|---|---|---|
+| Phan Võ Trọng Tiển | Research / evidence: đọc review, lấy quote thật, ghi nguồn | `evidence-pack.md` |
+| Võ Tấn Trung | SPEC final: cập nhật pain statement, build slice, failure mode | `spec-final.md` |
+| Đào Văn Tuân | Prototype: build flow input → AI → output | `prototype-readme.md` và link demo/video |
+| Nguyễn Bá Thành | Test: happy, low-budget, input mơ hồ | `prompt-tests-or-failure-log.md` |
+
+---
+
+## Checklist cần bổ sung
+
+- [ ] Chụp screenshot self-use thật trên web/app Vinpearl, VinWonders hoặc Sun World.
+- [ ] Thử ít nhất 3 query thật liên quan đến lịch trình, combo, ngân sách hoặc chi phí gia đình.
+- [ ] Đọc 20-30 review App Store / Play Store / Google Maps / group du lịch.
+- [ ] Bổ sung 3-5 quote thật vào evidence pack.
+- [ ] Điền nguồn, user type và pain/failure mode cho từng quote.
+- [ ] Cập nhật thin SPEC thành bản final sau khi evidence thật đã được thêm.
+- [ ] Ghi rõ owner kiểm thử failure path.
+
+---
+
+## Scope không build trong Day 06
+
+- Booking thật: đặt phòng, vé, tour.
+- Cá nhân hóa theo lịch sử chuyến đi.
+- So sánh nhiều điểm đến hoặc nhiều brand cùng lúc.
+- Gợi ý nhà hàng chi tiết trong khu.
+- Multi-language support.
